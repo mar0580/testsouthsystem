@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Teste SouthSystem</title>
+</head>
+<body>
+
+	<div>
+		<h2>Pauta</h2>
+		<form th:action="@{/action_page.php}" method="post">
+			<label for="fname">Nova pauta:</label> &nbsp; 
+			<input type="text" id="fname" name="fname" value="John"> &nbsp; 
+			<input type="submit" value="Enviar">
+		</form>
+	</div>
+	<p>
+	<hr>
+	<p>
+	<div>		
+			<h2>Selecione pauta</h2>
+			<ul th:each="Pauta : ${sessionMessages}">
+				<li th:text="${message}">msg</li>
+			</ul>
+			
+			<select class="form-control" th:field="${pauta.pautaId}"  id="dropOperator">
+		    	<option value="0">select operator</option>
+		    	<option th:each="pauta : ${sessionMessages}" ></option>
+		    </select>		
+		<form th:action="@{/action_page.php}">		
+			<label for="fname">CPF:</label> &nbsp; 
+			<input type="text" id="cpf" name="cpf" value=""> &nbsp; 
+			<input type="radio" name="gender" value="S"> Sim &nbsp; &nbsp; 
+			<input type="radio" name="gender" value="N"> Não &nbsp;
+			<input type="submit" value="Votar" />
+		</form>
+    </div>
+    <p>
+	<hr>
+	<p>
+	<div>
+		<form th:action="@{/persistMessage}" method="post">
+			<textarea name="msg" cols="40" rows="2"></textarea>
+			<br> 
+			<input type="submit" value="Save Message" />
+		</form>
+	</div>
+	
+	<div>
+		<form th:action="@{/destroy}" method="post">
+			<input type="submit" value="Destroy Session" />
+		</form>
+	</div>
+</body>
+</html>
