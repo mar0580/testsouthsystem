@@ -69,7 +69,7 @@ public class VotoPautaController {
 		serviceVotoPauta.realizarVotacao(votoPauta);
 	}
 
-	@GetMapping(path = "/contabilizar/votoPauta/id/{id}")
+	@GetMapping(path = "/contabiliza/votoPauta/id/{id}")
 	public Map<String, String> contabilizarPautasPorId(@PathVariable(name = "id", required = true) Long id)
 			throws PautaNotFoundException {
 		return serviceVotoPauta.contabilizarPautaPorId(id);
