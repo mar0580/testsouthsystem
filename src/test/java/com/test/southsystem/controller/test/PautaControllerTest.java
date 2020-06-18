@@ -1,10 +1,13 @@
 package com.test.southsystem.controller.test;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.Objects;
 
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +18,9 @@ import org.springframework.test.context.web.WebAppConfiguration;
 
 import com.test.southsystem.datasource.model.Pauta;
 import com.test.southsystem.repository.PautaRepository;
+import com.test.southsystem.resource.model.PautaResource;
 import com.test.southsystem.service.BuscarPautaPorIdServiceImpl;
-
-
+import com.test.southsystem.service.CadastroPautaServiceImpl;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -26,22 +29,40 @@ import com.test.southsystem.service.BuscarPautaPorIdServiceImpl;
 public class PautaControllerTest {
 
 	@Autowired
-	private BuscarPautaPorIdServiceImpl serviceImpl;
+	private BuscarPautaPorIdServiceImpl buscarPautaServiceImpl;
+
+	@Autowired
+	private CadastroPautaServiceImpl cadastroPautaServiceImpl;
 
 	@Autowired
 	private PautaRepository pautaRepository;
 
+	PautaResource pautaResource;
+
+	@Before
+	public void setUp() {
+		pautaResource = new PautaResource();
+		pautaResource.setPauta("Nova Pauta Test @Before");
+	}
+
 	@Test
-	public void testHomeController() {
-		List<Pauta> listaPautas = serviceImpl.buscarTodasAsPautas();
-		
-	    boolean listaPautasDatabase = pautaRepository.existsById(1L);
+	public void buscarPautasPorIdTest() {
+		assertTrue(pautaRepository.existsById(1L));
+	}
 
-	    Pauta pautaService = listaPautas.stream()
-	        .filter(pauta_ -> pauta_.getPauta().equals("Nova Pauta 1")).findFirst().get();
+	@Test
+	public void listaPautasTest() {
+		List<Pauta> listaPautas = buscarPautaServiceImpl.buscarTodasAsPautas();
+		assertNotNull(Objects.nonNull(listaPautas));
+	}
 
-	    
-	    assertNotNull(Objects.nonNull(listaPautas));
-	    //assertEquals(listaPautasDatabase.getPauta(), pautaService.getPauta());
+	@Test
+	public void salvarPauta() {
+		cadastroPautaServiceImpl.cadastro(pautaResource);
+
+		Pauta pauta = pautaRepository.findAll().stream()
+				.filter(pauta_ -> pauta_.getPauta().equals("Nova Pauta Test @Before")).findFirst().get();
+
+		assertEquals("Nova Pauta Test @Before", pauta.getPauta());
 	}
 }

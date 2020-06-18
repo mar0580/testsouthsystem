@@ -32,4 +32,9 @@ public class PautaResource implements Serializable {
 	public void setPauta(String pauta) {
 		this.pauta = pauta;
 	}
+	
+	@Override
+	  public String toString() {
+	    return "PautaResource [pauta=" + pauta + "]";
+	  }
 }

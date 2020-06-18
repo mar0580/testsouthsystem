@@ -28,22 +28,22 @@ public class PautaController {
 	private CadastroPautaServiceImpl serviceCadastro;
 
 	@GetMapping(path = "/pautas")
-	public List<Pauta> buscarPautas() {
+	public List<Pauta>listaPautas() {
 		return serviceBuscarPauta.buscarTodasAsPautas();
 	}
 
 	@GetMapping(path = "/pauta/id/{id}")
-	public Pauta buscarPautasPorId(@PathVariable(name = "id", required = true) Long id) throws PautaNotFoundException {
+	public Pauta buscaPautaPorId(@PathVariable(name = "id", required = true) Long id) throws PautaNotFoundException {
 		return serviceBuscarPauta.buscarPorId(id);
 	}
 
 	@PostMapping(path = "/pauta/save")
-	public void salvarPauta(@RequestBody PautaResource pauta) {
+	public void salvaPauta(@RequestBody PautaResource pauta) {
 		serviceCadastro.cadastro(pauta);
 	}
 
 	@DeleteMapping(path = "/pauta/delete/{id}")
-	public void deletePauta(@PathVariable(name = "id", required = true) Long id) throws PautaNotFoundException {
+	public void deletaPauta(@PathVariable(name = "id", required = true) Long id) throws PautaNotFoundException {
 		serviceBuscarPauta.deletarPorId(id);
 	}
 
