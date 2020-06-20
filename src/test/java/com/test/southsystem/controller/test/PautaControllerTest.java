@@ -57,7 +57,7 @@ public class PautaControllerTest {
 	}
 
 	@Test
-	public void salvarPauta() {
+	public void salvaPauta() {
 		cadastroPautaServiceImpl.cadastro(pautaResource);
 
 		Pauta pauta = pautaRepository.findAll().stream()
